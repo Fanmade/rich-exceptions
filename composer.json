@@ -1,0 +1,37 @@
+{
+  "name": "fanmade/rich-exceptions",
+  "description": "Increase your developer-experience by adding context and some magic to your Exceptions",
+  "keywords": [
+    "exception",
+    "exceptions",
+    "error",
+    "errors"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Benjamin Reuter",
+      "email": "dev@reuterben.de",
+      "homepage": "https://reuterben.de",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Fanmade\\RichExceptions\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Fanmade\\RichExceptions\\Tests\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "pestphp/pest": "^2.25"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
+}
