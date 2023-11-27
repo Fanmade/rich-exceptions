@@ -8,10 +8,12 @@ use Fanmade\RichExceptions\Contracts\RichExceptionInterface;
 use Fanmade\RichExceptions\Helpers\ContextCollection;
 use Throwable;
 
-readonly class RichException implements RichExceptionInterface
+class RichException implements RichExceptionInterface
 {
-    public function __construct(private ?Throwable $originalException = null, private readonly ContextCollection $context = new ContextCollection())
-    {}
+    public function __construct(
+        private readonly ?Throwable $originalException = null,
+        private readonly ContextCollection $context = new ContextCollection()
+    ) {}
 
     public static function from(Throwable $exception): static
     {
