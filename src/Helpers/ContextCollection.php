@@ -20,7 +20,7 @@ class ContextCollection implements Iterator
 
     private array $keys;
 
-    public function __construct(private readonly array $context = [])
+    public function __construct(private array $context = [])
     {
         $this->keys = array_keys($context);
     }
@@ -30,24 +30,33 @@ class ContextCollection implements Iterator
         return new static($context);
     }
 
-    public static function fromArray(array $array): static {
+    public static function fromArray(array $array): static
+    {
         return new static($array);
     }
 
     public function getNumericKey(string $key): int
     {
-        if (!in_array($key, $this->keys, true)) {
+        $numericKey = $this->findNumericKey($key);
+        if (!$numericKey) {
             throw new InvalidArgumentException("Key {$key} does not exist in context.");
         }
+
+        return $numericKey;
+    }
+
+    public function findNumericKey(string $key): int|false
+    {
         return array_search($key, $this->keys, true);
     }
 
     public function getKeyForPosition(int $position = null): string|int
     {
-        $key = $this->findKeyForPosition($position );
+        $key = $this->findKeyForPosition($position);
         if (!$key) {
             throw new InvalidArgumentException("Position $position does not exist in context.");
         }
+
         return $key;
     }
 
@@ -56,6 +65,7 @@ class ContextCollection implements Iterator
         if ($position === null) {
             $position = $this->position;
         }
+
         return $this->keys[$position] ?? false;
     }
 
@@ -92,5 +102,37 @@ class ContextCollection implements Iterator
     public function toArray(): array
     {
         return $this->context;
+    }
+
+    public function add(string $key, mixed $content): static
+    {
+        $this->context[$key] = $content;
+        $this->keys[] = $key;
+
+        return $this;
+    }
+
+    public function remove(string $key): static
+    {
+        $index = $this->findNumericKey($key);
+        if ($index !== false) {
+            unset($this->context[$key], $this->keys[$index]);
+        }
+
+        return $this;
+    }
+
+    public function get(string $string, mixed $default = null): mixed
+    {
+        return $this->context[$string] ?? $default;
+    }
+
+    public function only(array $array): array {
+        $result = [];
+        foreach ($array as $key) {
+            $result[$key] = $this->get($key);
+        }
+
+        return $result;
     }
 }

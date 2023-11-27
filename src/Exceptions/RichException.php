@@ -4,20 +4,44 @@ declare(strict_types=1);
 
 namespace Fanmade\RichExceptions\Exceptions;
 
-use Fanmade\RichExceptions\Contracts\RichExceptionInterface;
+use Exception;
+use Fanmade\RichExceptions\Contracts\HasContext;
+use Fanmade\RichExceptions\Contracts\RichException as RichExceptionInterface;
 use Fanmade\RichExceptions\Helpers\ContextCollection;
 use Throwable;
 
-class RichException implements RichExceptionInterface
+class RichException extends Exception implements RichExceptionInterface, HasContext
 {
-    public function __construct(
-        private readonly ?Throwable $originalException = null,
-        private readonly ContextCollection $context = new ContextCollection()
-    ) {}
+    use \Fanmade\RichExceptions\Traits\HasContext;
+    private ?Throwable $originalException;
 
-    public static function from(Throwable $exception): static
+    public function __construct(string $message = "", int $code = 0, Throwable $previous = null){
+        $this->initContext();
+        parent::__construct($message, $code, $previous);
+    }
+
+    public function setOriginalException(Throwable $originalException): static
     {
-        return new static($exception);
+        $this->originalException = $originalException;
+
+        return $this;
+    }
+
+    public static function from(Throwable $exception, array|ContextCollection $context = []): static
+    {
+        // This allows you to just always call from() without having to check if the exception is already a RichException
+        if ($exception instanceof static) {
+            return $exception;
+        }
+        $context = $context instanceof ContextCollection ? $context : new ContextCollection($context);
+
+        $richException = (new static($exception->getMessage(), (int)$exception->getCode(), $exception))
+            ->setOriginalException($exception)
+            ->setContext($context);
+        $richException->file = $exception->getFile();
+        $richException->line = $exception->getLine();
+
+        return $richException;
     }
 
     public function getOriginalException(): ?Throwable
@@ -25,8 +49,26 @@ class RichException implements RichExceptionInterface
         return $this->originalException;
     }
 
-    public function getContext(): ContextCollection
+
+    public function getDefaultErrorMessage(): string
     {
-        return $this->context;
+        return 'Error';
+    }
+
+    public function __toString(): string{
+        return $this->originalException?->getMessage() ?? $this->getDefaultErrorMessage();
+    }
+
+
+    public function toArray(): array
+    {
+        return [
+            'code' => $this->getCode(),
+            'message' => $this->getMessage(),
+            'file' => $this->getFile(),
+            'line' => $this->getLine(),
+            'trace' => $this->getTraceAsString(), // The normal trace as an array is too big for the log
+            'context' => $this->context,
+        ];
     }
 }
