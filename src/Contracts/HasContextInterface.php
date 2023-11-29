@@ -4,7 +4,7 @@ namespace Fanmade\RichExceptions\Contracts;
 
 use Fanmade\RichExceptions\Helpers\ContextCollection;
 
-interface HasContext
+interface HasContextInterface
 {
     public function setContext(ContextCollection $context): static;
 

@@ -4,7 +4,7 @@ namespace Fanmade\RichExceptions\Contracts;
 
 use Throwable;
 
-interface RichException
+interface RichExceptionInterface
 {
     public static function from(Throwable $exception): self;
 

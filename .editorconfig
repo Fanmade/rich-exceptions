@@ -2,7 +2,7 @@ root = true
 
 [*]
 charset = utf-8
-end_of_line = crlf
+end_of_line = lf
 indent_size = 4
 indent_style = space
 insert_final_newline = false
@@ -154,7 +154,7 @@ ij_php_method_weight = 28
 ij_php_modifier_list_wrap = false
 ij_php_multiline_chained_calls_semicolon_on_new_line = false
 ij_php_namespace_brace_style = 1
-ij_php_new_line_after_php_opening_tag = false
+ij_php_new_line_after_php_opening_tag = true
 ij_php_null_type_position = in_the_end
 ij_php_package_weight = 28
 ij_php_param_weight = 0
@@ -186,7 +186,7 @@ ij_php_space_after_colon_in_return_type = true
 ij_php_space_after_comma = true
 ij_php_space_after_for_semicolon = true
 ij_php_space_after_quest = true
-ij_php_space_after_type_cast = false
+ij_php_space_after_type_cast = true
 ij_php_space_after_unary_not = false
 ij_php_space_before_array_initializer_left_brace = false
 ij_php_space_before_catch_keyword = true
@@ -263,6 +263,7 @@ ij_php_variable_naming_style = mixed
 ij_php_version_weight = 28
 ij_php_while_brace_force = always
 ij_php_while_on_new_line = false
+insert_final_newline = true
 
 [{*.har,*.jsb2,*.jsb3,*.json,.babelrc,.eslintrc,.prettierrc,.stylelintrc,bowerrc,composer.lock,jest.config}]
 indent_size = 2
