@@ -30,6 +30,7 @@
     }
   },
   "require-dev": {
+    "jaschilz/php-coverage-badger": "^2.0",
     "pestphp/pest": "^2.25",
     "squizlabs/php_codesniffer": "^3.7"
   },
@@ -51,13 +52,16 @@
       "@test:style"
     ],
     "test:unit": [
-      " XDEBUG_MODE=coverage vendor/bin/pest --configuration=phpunit.xml --coverage-text --coverage-clover=coverage.xml"
+      "XDEBUG_MODE=coverage vendor/bin/pest --configuration=phpunit.xml --coverage-clover=coverage.xml"
     ],
     "test:style": [
       "vendor/bin/phpcs"
     ],
     "style:fix": [
       "vendor/bin/phpcbf"
+    ],
+    "badge:coverage": [
+      "vendor/bin/php-coverage-badger coverage.xml dev/badges/coverage.svg"
     ]
   },
   "minimum-stability": "stable",
