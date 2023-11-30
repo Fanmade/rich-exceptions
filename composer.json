@@ -60,9 +60,6 @@
       "vendor/bin/phpcbf"
     ]
   },
-  "pre-commit": [
-    "test"
-  ],
   "minimum-stability": "stable",
   "prefer-stable": true
 }
