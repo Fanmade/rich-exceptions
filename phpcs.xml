@@ -37,6 +37,8 @@
         <exclude name="PEAR.Commenting.FileComment.MissingPackageTag"/>
         <exclude name="PEAR.Commenting.FileComment.MissingLinkTag"/>
         <exclude name="PEAR.Commenting.FileComment.MissingVersion"/>
+        <exclude name="PEAR.Commenting.FileComment.MissingAuthorTag"/>
+        <exclude name="PEAR.Commenting.FileComment.MissingLicenseTag"/>
         <exclude name="PEAR.Commenting.InlineComment"/>
         <exclude name="PEAR.Classes.ClassDeclaration.OpenBraceNotAlone"/>
         <exclude name="PEAR.WhiteSpace.ScopeClosingBrace.Line"/>
