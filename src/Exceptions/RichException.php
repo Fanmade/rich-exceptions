@@ -38,12 +38,10 @@ class RichException extends Exception implements RichExceptionInterface, HasCont
         }
         $context = $context instanceof ContextCollection ? $context : new ContextCollection($context);
 
-        $richException = (new static($exception->getMessage(), (int)$exception->getCode(), $exception))
+        $richException = (new static($exception->getMessage(), (int) $exception->getCode(), $exception))
             ->setOriginalException($exception)
             ->setContext($context);
-        $richException->file =
-
-            $exception->getFile();
+        $richException->file = $exception->getFile();
         $richException->line = $exception->getLine();
 
         return $richException;
