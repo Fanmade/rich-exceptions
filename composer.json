@@ -42,6 +42,27 @@
       "php-http/discovery": true
     }
   },
+  "scripts": {
+    "post-install-cmd": [
+      "bash dev/scripts/setup.sh"
+    ],
+    "test": [
+      "@test:unit",
+      "@test:style"
+    ],
+    "test:unit": [
+      " XDEBUG_MODE=coverage vendor/bin/pest --configuration=phpunit.xml --coverage-text --coverage-clover=coverage.xml"
+    ],
+    "test:style": [
+      "vendor/bin/phpcs"
+    ],
+    "style:fix": [
+      "vendor/bin/phpcbf"
+    ]
+  },
+  "pre-commit": [
+    "test"
+  ],
   "minimum-stability": "stable",
   "prefer-stable": true
 }
