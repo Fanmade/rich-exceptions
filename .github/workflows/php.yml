@@ -32,8 +32,21 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
-    - name: Run tests
-      run: composer test
+    -   name: Fix code style
+        run: composer style:fix
+
+    -   name: Check remaining code style
+        run: composer test:style
+
+    -   name: Run tests with coverage
+        run: vendor/bin/pest --coverage-clover clover.xml
+
+    -   name: Generate test coverage badge
+        uses: timkrase/phpunit-coverage-badge@v1.2.0
+        with:
+            coverage_badge_path: 'badge-coverage.svg'
+            push_badge: true
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
