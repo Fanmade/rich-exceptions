@@ -20,7 +20,6 @@
         </properties>
     </rule>
 
-
     <!-- Don't hide tokenizer exceptions -->
     <rule ref="Internal.Tokenizer.Exception">
         <type>error</type>

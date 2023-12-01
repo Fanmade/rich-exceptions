@@ -17,7 +17,8 @@
     }
   ],
   "require": {
-    "php": "^8.1"
+    "php": "^8.1",
+    "ext-simplexml": "*"
   },
   "autoload": {
     "psr-4": {
@@ -26,7 +27,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Fanmade\\RichExceptions\\Tests\\": "tests/"
+      "Fanmade\\RichExceptions\\Tests\\": "tests/",
+      "Fanmade\\Tools\\": "dev/tools/"
     }
   },
   "require-dev": {
@@ -48,8 +50,8 @@
       "bash dev/scripts/setup.sh"
     ],
     "test": [
-      "@test:unit",
-      "@test:style"
+      "@test:style",
+      "@test:unit"
     ],
     "test:unit": [
       "XDEBUG_MODE=coverage vendor/bin/pest --configuration=phpunit.xml --coverage-clover=coverage.xml"
@@ -61,7 +63,7 @@
       "vendor/bin/phpcbf"
     ],
     "badge:coverage": [
-      "vendor/bin/php-coverage-badger coverage.xml dev/badges/coverage.svg"
+      "Fanmade\\Tools\\CoverageBadgeGenerator::generateBadge"
     ]
   },
   "minimum-stability": "stable",

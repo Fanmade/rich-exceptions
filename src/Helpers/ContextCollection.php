@@ -17,7 +17,6 @@ use function is_array;
  */
 class ContextCollection implements Iterator
 {
-
     private int $position = 0;
 
     private array $keys;
