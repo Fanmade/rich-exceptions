@@ -13,6 +13,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    permissions:
+        contents: write
 
     steps:
     - uses: actions/checkout@v3
@@ -55,7 +57,11 @@ jobs:
       with:
         name: coverage-badge
         path: .github/badges/coverage.svg
+
+    - uses: stefanzweifel/git-auto-commit-action@v5
+
     - name: Commit the badge (if it changed)
+      continue-on-error: true
       run: |
             if [[ `git status --porcelain` ]]; then
               git config --global user.name 'Fanmade'
@@ -64,7 +70,9 @@ jobs:
               git commit -m "Coverage badge"
               git push
             fi
+
     - uses: popsiclestick/gist-sync-action@v1.2.0
+      continue-on-error: true
       id: sync
       with:
         auth: ${{ secrets.GIST_SECRET }}
