@@ -1,5 +1,5 @@
 [![Pipeline](https://github.com/Fanmade/rich-exceptions/actions/workflows/php.yml/badge.svg)](https://github.com/Fanmade/rich-exceptions/actions)
-[![Test Coverage](/dev/badges/coverage.svg)](https://packagist.com)
+[![Test Coverage](https://gist.github.com/Fanmade/b0eb72a8454c6346f36d99df7cd643d0/raw/coverage.svg)](https://packagist.com)
 
 # Rich Exceptions
 ## Work in progress. Not ready for production use!
