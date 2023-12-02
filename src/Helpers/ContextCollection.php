@@ -6,6 +6,7 @@ namespace Fanmade\RichExceptions\Helpers;
 
 use InvalidArgumentException;
 use Iterator;
+use JsonException;
 use function is_array;
 
 /**
@@ -36,14 +37,16 @@ class ContextCollection implements Iterator
         return new static($array);
     }
 
-    public function getNumericKey(string $key): int
+    public function toJson(): string
     {
-        $numericKey = $this->findNumericKey($key);
-        if (!$numericKey) {
-            throw new InvalidArgumentException("Key {$key} does not exist in context.");
-        }
+        try {
+            return json_encode($this->context, JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            $message = $e->getMessage();
+            $message = str_replace('"', '\"', $message);
 
-        return $numericKey;
+            return '{"error": "Could not encode context to JSON.", "message": "'.$message.'."}';
+        }
     }
 
     public function findNumericKey(string $key): int|false
@@ -55,7 +58,7 @@ class ContextCollection implements Iterator
     {
         $key = $this->findKeyForPosition($position);
         if (!$key) {
-            throw new InvalidArgumentException("Position $position does not exist in context.");
+            throw new InvalidArgumentException("Position '$position' does not exist in context.");
         }
 
         return $key;
@@ -172,5 +175,10 @@ class ContextCollection implements Iterator
     public function has(string $key): bool
     {
         return isset($this->context[$key]);
+    }
+
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }
