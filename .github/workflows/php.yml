@@ -42,18 +42,19 @@ jobs:
       uses: actions/cache@v3
       with:
           path: coverage.xml
+          key: ${{ runner.os }}-php-${{ hashFiles('coverage.xml') }}
 
     - name: Run tests with coverage
       run: XDEBUG_MODE=coverage vendor/bin/pest --configuration=phpunit.xml --coverage-clover=coverage.xml
+
+    - name: Generate test coverage badge
+      run: composer badge:coverage
 
     - name: Save coverage badge
       uses: actions/upload-artifact@v3
       with:
         name: coverage-badge
         path: dev/badges/coverage.svg
-
-    - name: Generate test coverage badge
-      run: composer badge:coverage
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
