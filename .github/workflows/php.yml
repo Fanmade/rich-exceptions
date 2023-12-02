@@ -76,7 +76,7 @@ jobs:
       id: sync
       with:
         auth: ${{ secrets.GIST_SECRET }}
-        gist_url: https://gist.github.com/Fanmade/b0eb72a8454c6346f36d99df7cd643d0/raw/Rich-Exceptions-Coverage.svg
+        gist_url: https://gist.github.com/Fanmade/b0eb72a8454c6346f36d99df7cd643d0/Rich-Exceptions-Coverage.svg
         gist_title: Rich-Exceptions-Coverage.svg
         gist_description: A badge showing the test coverage of Rich-Exceptions
         github_file: .github/badges/coverage.svg

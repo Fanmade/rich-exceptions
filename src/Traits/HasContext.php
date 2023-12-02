@@ -17,7 +17,7 @@ trait HasContext
 
     public function addContext(string $key, mixed $content): static
     {
-        $this->context->add($key, $content);
+        $this->getContext()->add($key, $content);
 
         return $this;
     }
@@ -31,6 +31,9 @@ trait HasContext
 
     public function getContext(): ContextCollection
     {
+        if (!isset($this->context)) {
+            $this->initContext();
+        }
         return $this->context;
     }
 }
