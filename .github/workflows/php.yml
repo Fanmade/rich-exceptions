@@ -40,9 +40,17 @@ jobs:
 
     - name: Run tests with coverage
       run: vendor/bin/pest --configuration=phpunit.xml --coverage-clover=coverage.xml
+      uses: actions/cache@v3
+      with:
+        name: code-coverage-report
+        path: coverage.xml
 
     - name: Generate test coverage badge
       run: composer badge:coverage
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-badge
+        path: dev/badges/coverage.svg
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
