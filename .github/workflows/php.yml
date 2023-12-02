@@ -55,17 +55,26 @@ jobs:
       with:
         name: coverage-badge
         path: dev/badges/coverage.svg
-    - name: Commit badge
-      run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -f dev/badges/coverage.svg
-          git commit -m "Add/Update badge"
-    - name: Push badge commit
-      uses: ad-m/github-push-action@master
+    - uses: popsiclestick/gist-sync-action@v1.2.0
+      id: sync
       with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ steps.extract_branch.outputs.branch }}
+        auth: ${{ secrets.GIST_SECRET }}
+        gist_url: https://gist.github.com/Fanmade/b0eb72a8454c6346f36d99df7cd643d0
+        gist_title: Rich-Exceptions Coverage
+        gist_description: A badge showing the test coverage of Rich-Exceptions
+        gist_filename: ${{ steps.extract_branch.outputs.branch }}.svg
+        github_file: dev/badges/coverage.svg
+#    - name: Commit badge
+#      run: |
+#          git config --local user.email "action@github.com"
+#          git config --local user.name "GitHub Action"
+#          git add -f dev/badges/coverage.svg
+#          git commit -m "Add/Update badge"
+#    - name: Push badge commit
+#      uses: ad-m/github-push-action@master
+#      with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          branch: ${{ steps.extract_branch.outputs.branch }}
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
