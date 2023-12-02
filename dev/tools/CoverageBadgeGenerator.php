@@ -43,7 +43,7 @@ class CoverageBadgeGenerator
         $this->svgContent = str_replace('{{ total }}', (string) $coverage, $this->svgContent);
         $this->svgContent = str_replace('{{ color }}', $color, $this->svgContent);
 
-        file_put_contents(__DIR__ . '/../badges/coverage.svg', trim($this->svgContent));
+        file_put_contents(__DIR__ . '/../../.github/badges/coverage.svg', trim($this->svgContent));
     }
 
     private function getCoverage(): float

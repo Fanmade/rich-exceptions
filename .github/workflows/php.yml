@@ -54,7 +54,16 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: coverage-badge
-        path: dev/badges/coverage.svg
+        path: .github/badges/coverage.svg
+    - name: Commit the badge (if it changed)
+      run: |
+            if [[ `git status --porcelain` ]]; then
+              git config --global user.name 'Fanmade'
+              git config --global user.email 'Fanmade@users.noreply.github.com'
+              git add -A
+              git commit -m "Coverage badge"
+              git push
+            fi
     - uses: popsiclestick/gist-sync-action@v1.2.0
       id: sync
       with:
