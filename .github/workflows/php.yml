@@ -60,16 +60,16 @@ jobs:
 
 #    - uses: stefanzweifel/git-auto-commit-action@v5
 
-    - name: Commit the badge (if it changed)
-      continue-on-error: true
-      run: |
-            if [[ `git status --porcelain` ]]; then
-              git config --global user.name 'Fanmade'
-              git config --global user.email 'Fanmade@users.noreply.github.com'
-              git add -A
-              git commit -m "Coverage badge"
-              git push
-            fi
+#    - name: Commit the badge (if it changed)
+#      continue-on-error: true
+#      run: |
+#            if [[ `git status --porcelain` ]]; then
+#              git config --global user.name 'Fanmade'
+#              git config --global user.email 'Fanmade@users.noreply.github.com'
+#              git add -A
+#              git commit -m "Coverage badge"
+#              git push
+#            fi
 
     - uses: popsiclestick/gist-sync-action@v1.2.0
       continue-on-error: true
@@ -79,7 +79,7 @@ jobs:
         gist_url: https://gist.github.com/Fanmade/b0eb72a8454c6346f36d99df7cd643d0/raw/Rich-Exceptions-Coverage.svg
         gist_title: Rich-Exceptions-Coverage.svg
         gist_description: A badge showing the test coverage of Rich-Exceptions
-        github_file: dev/badges/coverage.svg
+        github_file: .github/badges/coverage.svg
 #    - name: Commit badge
 #      run: |
 #          git config --local user.email "action@github.com"
