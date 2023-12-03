@@ -46,13 +46,16 @@ function something()
     // ..
 }
 
-/** @noinspection PhpExpressionResultUnusedInspection */
+/**
+ * @noinspection PhpExpressionResultUnusedInspection
+ * @noinspection PhpUnhandledExceptionInspection
+ */
 function resetSingleton(object $class): object
 {
     $reflection = new ReflectionClass($class);
     $instance = $reflection->getProperty('instance');
     $instance->setAccessible(true);
-    $instance->setValue(null);
+    $reflection->setStaticPropertyValue('instance', null);
     $instance->setAccessible(false);
 
     return $class::getInstance();

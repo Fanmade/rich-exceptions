@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Fanmade\RichExceptions;
 
 use Fanmade\RichExceptions\Traits\IsSingleton;
+use Psr\Log\LoggerInterface;
+use RuntimeException;
 
 /**
  * @method mixed get(string $key, mixed $default = null)
@@ -17,15 +19,53 @@ use Fanmade\RichExceptions\Traits\IsSingleton;
  * @method void replace(array $settings)
  * @method void clear()
  */
-class Configuration
+class RichExceptionsConfig
 {
     use IsSingleton;
 
-    private function __construct(private array $settings = [])
-    {}
+    private static bool $isInitialized = false;
 
-    public static function fromArray(array $array
-    ): static {
+    private function __construct(private array $settings = [])
+    {
+        self::$isInitialized = !empty($this->settings);
+        if (!self::$isInitialized) {
+            self::initialize();
+        }
+    }
+
+    public static function initialize(): self
+    {
+        self::$instance = self::loadConfig();
+        self::$isInitialized = true;
+
+        return self::$instance;
+    }
+
+    public static function loadConfig(string $path = null): self
+    {
+        if (empty($path)) {
+            $path = __DIR__ . '/../config.php';
+        }
+        if (!file_exists($path)) {
+            throw new RuntimeException("Config file not found at '$path'.");
+        }
+        $config = include $path;
+        if (!is_array($config)) {
+            throw new RuntimeException("Config file at '$path' did not return an array.");
+        }
+
+        // Merge the settings from the config file with the current settings.
+        if (isset(self::$instance)) {
+            self::$instance::mergeRecursive($config);
+        } else {
+            self::$instance = new static($config);
+        }
+
+        return self::$instance;
+    }
+
+    public static function fromArray(array $array): static
+    {
         if (isset(self::$instance)) {
             self::$instance::replace($array);
         } else {
@@ -67,7 +107,7 @@ class Configuration
 
     public static function mergeRecursive(array $settings): void
     {
-        self::getInstance()->settings = array_merge_recursive(self::getInstance()->settings, $settings);
+        self::getInstance()->settings = array_merge_recursive_distinct(self::getInstance()->settings, $settings);
     }
 
     public static function replace(array $settings): void
@@ -93,5 +133,13 @@ class Configuration
     public function __isset(string $name): bool
     {
         return self::getInstance()->has($name);
+    }
+
+    public function getLogger(): ?LoggerInterface
+    {
+        if (self::has('logger')) {
+            return self::get('logger');
+        }
+        return null;
     }
 }

@@ -96,7 +96,7 @@ class RichException extends Exception implements RichExceptionInterface, HasCont
 
     private function shouldLog(): bool
     {
-        return $this->logOverride ?? $this->getConfig()->get('log', true);
+        return $this->logOverride ?? (bool) $this->getConfig()->get('log.enabled', true);
     }
 
     public function __destruct()
