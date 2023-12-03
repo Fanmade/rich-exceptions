@@ -36,6 +36,7 @@ This package aims to make exceptions more useful by allowing to add context.
         - [ ] decorators
 - [ ] Custom error handler
 - [ ] HTTP error extensions ("NotFound" errors that should result automatically in 404 responses)
+- [ ] Switch to https://github.com/captainhookphp/captainhook for git hooks
 
 
 ----
