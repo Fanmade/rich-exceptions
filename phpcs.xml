@@ -60,7 +60,11 @@
         <exclude name="Squiz.Commenting.VariableComment.Missing"/>
     </rule>
     <rule ref="Squiz.Scope.MethodScope"/>
-    <rule ref="Squiz.Strings.ConcatenationSpacing"/>
+    <rule ref="Squiz.Strings.ConcatenationSpacing">
+        <properties>
+            <property name="spacing" value="1"/>
+        </properties>
+    </rule>
     <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing"/>
     <rule ref="Squiz.WhiteSpace.SemicolonSpacing.Incorrect"/>
     <rule ref="Squiz.WhiteSpace.FunctionSpacing">

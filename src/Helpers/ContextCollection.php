@@ -4,20 +4,23 @@ declare(strict_types=1);
 
 namespace Fanmade\RichExceptions\Helpers;
 
+use Fanmade\RichExceptions\Traits\HasRichExceptionsConfig;
 use InvalidArgumentException;
 use Iterator;
 use JsonException;
 use function is_array;
 
 /**
- * The context can contain various values, while it is either keyed by integers or strings. This class is meant to
- * provide some helper methods to make working with the context easier. It is not meant to be used outside of the
- * RichExceptions package.
+ * The context can contain various values, while it is either keyed by integers or strings.
+ * This class is meant to provide some helper methods to make working with the context
+ * easier. It is not meant to be used outside the RichExceptions package.
  *
  * @internal
  */
 class ContextCollection implements Iterator
 {
+    use HasRichExceptionsConfig;
+
     private int $position = 0;
 
     private array $keys;
@@ -45,7 +48,7 @@ class ContextCollection implements Iterator
             $message = $e->getMessage();
             $message = str_replace('"', '\"', $message);
 
-            return '{"error": "Could not encode context to JSON.", "message": "'.$message.'."}';
+            return '{"error": "Could not encode context to JSON.", "message": "' . $message . '."}';
         }
     }
 

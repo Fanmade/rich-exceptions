@@ -34,6 +34,19 @@ trait HasContext
         if (!isset($this->context)) {
             $this->initContext();
         }
+
         return $this->context;
+    }
+
+    public function getContextArray(): array
+    {
+        return $this->getContext()->all();
+    }
+
+    public function setContextFromArray(array $context): static
+    {
+        $this->setContext(new ContextCollection($context));
+
+        return $this;
     }
 }

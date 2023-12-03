@@ -23,7 +23,10 @@
   "autoload": {
     "psr-4": {
       "Fanmade\\RichExceptions\\": "src/"
-    }
+    },
+    "files": [
+      "src/Helpers/helper_functions.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {

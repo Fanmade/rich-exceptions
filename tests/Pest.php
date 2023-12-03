@@ -45,3 +45,15 @@ function something()
 {
     // ..
 }
+
+/** @noinspection PhpExpressionResultUnusedInspection */
+function resetSingleton(object $class): object
+{
+    $reflection = new ReflectionClass($class);
+    $instance = $reflection->getProperty('instance');
+    $instance->setAccessible(true);
+    $instance->setValue(null);
+    $instance->setAccessible(false);
+
+    return $class::getInstance();
+}
